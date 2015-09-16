@@ -1,0 +1,34 @@
+# This file exists so you can easily regenerate your project.
+#
+# Unfortunatelly cookiecutter can't use this right away so
+# you have to copy this file to ~/.cookiecutterrc
+
+default_context:
+
+    appveyor:                  'yes'
+    c_extension_optional:      'no'
+    c_extension_support:       'no'
+    codacy:                    'no'
+    codeclimate:               'no'
+    codecov:                   'no'
+    command_line_interface:    'plain'
+    coveralls:                 'yes'
+    distribution_name:         'searchstringparser'
+    email:                     'beber@molgen.mpg.de'
+    full_name:                 'Moritz Emanuel Beber'
+    github_username:           'AGHerwig'
+    landscape:                 'no'
+    package_name:              'searchstringparser'
+    project_name:              'Search String Parser'
+    project_short_description: 'Parse a more general search syntax to conform with a particular SQL dialect.'
+    release_date:              '2015-09-16'
+    repo_name:                 'searchstringparser'
+    requiresio:                'no'
+    scrutinizer:               'no'
+    sphinx_theme:              'sphinx_py3doc_enhanced_theme'
+    test_matrix_configurator:  'yes'
+    test_runner:               'pytest'
+    travis:                    'yes'
+    version:                   '0.1.0'
+    website:                   'https://github.com/AGHerwig/searchstringparser'
+    year:                      '2015'

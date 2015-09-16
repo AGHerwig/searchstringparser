@@ -1,0 +1,5 @@
+searchstringparser
+==================
+
+.. automodule:: searchstringparser
+    :members:
