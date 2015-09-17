@@ -60,3 +60,7 @@ docs/_build
 .pytest
 .bootstrap
 *.bak
+
+# ply
+src/searchstringparser/parser/parser.out
+src/searchstringparser/parser/parsetab.py

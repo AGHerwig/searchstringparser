@@ -5,9 +5,9 @@ from __future__ import (absolute_import, unicode_literals)
 
 
 """
-====================
-Search String Parser
-====================
+=============================
+Search String Parser Dialects
+=============================
 
 :Authors:
     Moritz Emanuel Beber
@@ -22,11 +22,8 @@ Search String Parser
 """
 
 
-__version__ = "0.1.0"
+__all__ = ["PostgreSQLTextSearchParser"]
 
 
-from .lexer import *
-from .parser import *
-
-
+from .postgresql import PostgreSQLTextSearchParser
 
