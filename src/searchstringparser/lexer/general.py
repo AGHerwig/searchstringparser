@@ -34,22 +34,20 @@ class GeneralSearchStringLexer(object):
     )
     # List of token names.   This is always required
     tokens = (
-       "SYMBOL",
-       "SPACE",
        "WORD",
+       "WILDCARD",
+       "NOT",
        "AND",
        "OR",
-       "NOT",
-       "WILDCARD",
-       "LITERAL_QUOTE",
-       "QUOTE",
        "LPAREN",
-       "RPAREN"
+       "RPAREN",
+       "SYMBOL",
+       "LITERAL_QUOTE",
+       "QUOTE"
     )
 
     # A string containing ignored characters (spaces and tabs)
-    t_ANY_ignore  = "\f\v" # unusual whitespace
-    t_ANY_SPACE = r"[ \t\r\n]+"
+    t_ANY_ignore  = " \t\r\n\f\v" # whitespace
     t_WORD = r"\w+"
     # Regular expression rules for simple tokens
     t_AND = r"&{1,2}|and|AND"
@@ -57,15 +55,47 @@ class GeneralSearchStringLexer(object):
     t_NOT = r"-|~|!|not|NOT"
     t_WILDCARD = r"\*"
     # rules for 'quoting' state
-    t_quoting_SYMBOL = r"[^'\" \t\r\n]+" # anything but whitespace and quotes
+    t_quoting_SYMBOL = r"[^'\"]+" # anything but whitespace and quotes
 
-    def __init__(self, **kw_args):
+    def __init__(self, illegal="ignore", **kw_args):
         super(GeneralSearchStringLexer, self).__init__()
+# pick between different error handling methods
         self.lexer = lex.lex(module=self, **kw_args)
         self.parens_level = 0
         self._invalid = None
         self._invalid_pos = None
         self._quote_start = None
+
+    def __getattr__(self, attr):
+        return getattr(self.lexer, attr)
+
+    def __iter__(self):
+        return (tok for tok in iter(self.lexer.token, None))
+
+    def input(self, data):
+        self._invalid = list()
+        self._invalid_pos = list()
+        self.lexer.input(data)
+
+    def get_illegal(self):
+        if not self._invalid:
+            return None
+        return (self._invalid, self._invalid_pos)
+
+    # inspect output
+    def print_tokens(self, data):
+        self.input(data)
+        for tok in self:
+            print(tok)
+        if self._invalid:
+            print("Invalid character(s): " + ", ".join(self._invalid))
+            print("at position(s): " + ", ".join([str(x) for x in self._invalid_pos]))
+
+    # Error handling rule
+    def t_ANY_error(self, t):
+        self._invalid.append(t.value[0])
+        self._invalid_pos.append(t.lexpos)
+        t.lexer.skip(1)
 
     def t_quoting_LITERAL_QUOTE(self, t):
         r"\\'|\\\""
@@ -95,21 +125,4 @@ class GeneralSearchStringLexer(object):
         r"\)"
         self.parens_level -= 1
         return t
-
-    # Error handling rule
-    def t_ANY_error(self, t):
-        self._invalid.append(t.value[0])
-        self._invalid_pos.append(t.lexpos)
-        t.lexer.skip(1)
-
-    # test output
-    def test(self, data):
-        self._invalid = list()
-        self._invalid_pos = list()
-        self.lexer.input(data)
-        for tok in iter(self.lexer.token, None):
-            print(tok)
-        if self._invalid:
-            print("Invalid character(s): " + ", ".join(self._invalid))
-            print("at position(s): " + ", ".join([str(x) for x in self._invalid_pos]))
 

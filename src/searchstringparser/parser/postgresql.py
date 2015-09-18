@@ -25,13 +25,13 @@ appropriate lexer. The goal is to generate a string for PostgreSQL full text
 search that conforms with the syntax understood by the function [ts_query]().
 
 
-term : term SPACE term
+term : term term
        | term LITERAL_QUOTE
        | term SYMBOL
        | LITERAL_QUOTE
        | SYMBOL
 
-expression : expression SPACE expression
+expression : expression expression
            | expression AND expression
            | expression OR expression
            | NOT expression
@@ -55,7 +55,7 @@ class PostgreSQLTextSearchParser(object):
 
     precedence = (
         ("left", "OR"),
-        ("left", "AND", "SPACE"),
+        ("left", "AND"),
         ("right", "NOT"),
         ("left", "WILDCARD")
     )
@@ -69,13 +69,11 @@ class PostgreSQLTextSearchParser(object):
     def parse(self, data, debug=False, tracking=False, tokenfunc=None):
         self.lexer._invalid = list()
         self.lexer._invalid_pos = list()
-        return self.parser.parse(data, lexer=self.lexer.lexer, debug=debug,
+        return self.parser.parse(data, lexer=self.lexer, debug=debug,
                 tracking=tracking, tokenfunc=tokenfunc)
 
-    def get_illegal_chars(self):
-        if not self.lexer._invalid:
-            return None
-        return (self.lexer._invalid, self.lexer._invalid_pos)
+    def get_illegal(self):
+        self.lexer.get_illegal()
 
     def p_error(self, p):
         if p is None:
@@ -83,8 +81,8 @@ class PostgreSQLTextSearchParser(object):
         raise SyntaxError(str(p))
 
     def p_expression_space(self, p):
-        """expression : expression SPACE expression"""
-        p[0] = "{} & {}".format(p[1], p[3])
+        """expression : expression expression %prec AND"""
+        p[0] = "{} & {}".format(p[1], p[2])
 
     def p_expression_and(self, p):
         """expression : expression AND expression"""
@@ -115,15 +113,15 @@ class PostgreSQLTextSearchParser(object):
         p[0] = p[1]
 
     def p_term_term_space_term(self, p):
-        """term : term SPACE term"""
-        p[0] = "{} {}".format(p[1], p[3])
+        """term : term term %prec AND"""
+        p[0] = "{} {}".format(p[1], p[2])
 
     def p_term_term_and_literal_quote(self, p):
-        """term : term LITERAL_QUOTE"""
+        """term : term LITERAL_QUOTE %prec WILDCARD"""
         p[0] = "{}''".format(p[1])
 
     def p_term_term_and_symbol(self, p):
-        """term : term SYMBOL"""
+        """term : term SYMBOL %prec WILDCARD"""
         p[0] = "{}{}".format(p[1], p[2])
 
     def p_term_literal_quote(self, p):
