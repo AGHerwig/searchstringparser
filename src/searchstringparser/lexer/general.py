@@ -43,28 +43,30 @@ class GeneralSearchStringLexer(object):
        "RPAREN",
        "SYMBOL",
        "LITERAL_QUOTE",
+       "SPACE",
        "QUOTE"
     )
 
     # A string containing ignored characters (spaces and tabs)
-    t_ANY_ignore  = " \t\r\n\f\v" # whitespace
-    t_WORD = r"\w+"
+    t_ignore  = " \t\r\n\f\v" # whitespace (interpreted literally not as regex)
     # Regular expression rules for simple tokens
+    t_WORD = r"\w+"
+    t_WILDCARD = r"\*"
+    t_NOT = r"-|~|!|not|NOT"
     t_AND = r"&{1,2}|and|AND"
     t_OR = r"\|{1,2}|or|OR"
-    t_NOT = r"-|~|!|not|NOT"
-    t_WILDCARD = r"\*"
     # rules for 'quoting' state
-    t_quoting_SYMBOL = r"[^'\"]+" # anything but whitespace and quotes
+    t_quoting_ignore = ""
+    t_quoting_SYMBOL = r"([^'\"\s\\]|\\(?!'|\"))+" # anything but other tokens
 
     def __init__(self, illegal="ignore", **kw_args):
         super(GeneralSearchStringLexer, self).__init__()
 # pick between different error handling methods
         self.lexer = lex.lex(module=self, **kw_args)
         self.parens_level = 0
+        self._quote_start = None
         self._invalid = None
         self._invalid_pos = None
-        self._quote_start = None
 
     def __getattr__(self, attr):
         return getattr(self.lexer, attr)
@@ -73,6 +75,8 @@ class GeneralSearchStringLexer(object):
         return (tok for tok in iter(self.lexer.token, None))
 
     def input(self, data):
+        self.parens_level = 0
+        self._quote_start = None
         self._invalid = list()
         self._invalid_pos = list()
         self.lexer.input(data)
@@ -97,6 +101,17 @@ class GeneralSearchStringLexer(object):
         self._invalid_pos.append(t.lexpos)
         t.lexer.skip(1)
 
+    def t_LPAREN(self, t):
+        r"\("
+        self.parens_level += 1
+        return t
+
+    def t_RPAREN(self, t):
+        r"\)"
+        self.parens_level -= 1
+        return t
+
+    # quoting state
     def t_quoting_LITERAL_QUOTE(self, t):
         r"\\'|\\\""
         return t
@@ -108,7 +123,7 @@ class GeneralSearchStringLexer(object):
         return t
 
     def t_quoting_QUOTE(self, t):
-        r'\'|"'
+        r"'|\""
         # handle different quote inside quote
         if t.value != t.lexer.lexdata[self._quote_start - 1]:
             t.type = "LITERAL_QUOTE"
@@ -116,13 +131,7 @@ class GeneralSearchStringLexer(object):
         t.lexer.pop_state()
         return t
 
-    def t_LPAREN(self, t):
-        r"\("
-        self.parens_level += 1
-        return t
-
-    def t_RPAREN(self, t):
-        r"\)"
-        self.parens_level -= 1
+    def t_quoting_SPACE(self, t):
+        r"\s+"
         return t
 

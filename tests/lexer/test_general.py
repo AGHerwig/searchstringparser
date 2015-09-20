@@ -53,6 +53,16 @@ class TestGeneralSearchStringLexer(object):
         ("stuff || stuff", ("WORD", "OR", "WORD")),
         ("stuff or stuff", ("WORD", "OR", "WORD")),
         ("stuff OR stuff", ("WORD", "OR", "WORD")),
+        ("(stuff OR stuff)", ("LPAREN", "WORD", "OR", "WORD", "RPAREN")),
+        ("(good stuff) (more stuff)", ("LPAREN", "WORD", "WORD", "RPAREN",
+            "LPAREN", "WORD", "WORD", "RPAREN")),
+        ("'stuff'", ("QUOTE", "SYMBOL", "QUOTE")),
+        ("\"stuff\"", ("QUOTE", "SYMBOL", "QUOTE")),
+        ("\"stuff goes on\"", ("QUOTE", "SYMBOL", "SPACE", "SYMBOL", "SPACE",
+            "SYMBOL", "QUOTE")),
+        ("\"stuff '\"", ("QUOTE", "SYMBOL", "SPACE", "LITERAL_QUOTE", "QUOTE")),
+        ("\"stuff 'goes\\\" on\"", ("QUOTE", "SYMBOL", "SPACE", "LITERAL_QUOTE",
+            "SYMBOL", "LITERAL_QUOTE", "SPACE", "SYMBOL", "QUOTE")),
     ])
     def test_token(self, lexer, query, expected):
         lexer.input(query)

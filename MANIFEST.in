@@ -13,9 +13,12 @@ include .pylintrc
 include AUTHORS.rst
 include CHANGELOG.rst
 include CONTRIBUTING.rst
-include LICENSE
+include LICENSE.rst
 include README.rst
 
 include tox.ini .travis.yml appveyor.yml
+
+exclude src/searchstringparser/parser/parser.out
+exclude src/searchstringparser/parser/parsetab.py
 
 global-exclude *.py[cod] __pycache__ *.so *.dylib
