@@ -54,19 +54,25 @@ class TestGeneralSearchStringLexer(object):
         ("stuff || stuff", "stuff | stuff"),
         ("stuff or stuff", "stuff | stuff"),
         ("stuff OR stuff", "stuff | stuff"),
+        ("(stuff OR stuff)", "(stuff | stuff)"),
+        ("(good stuff) (more stuff)", "(good & stuff) & (more & stuff)"),
+        ("'stuff'", "'stuff'"),
+        ("\"stuff\"", "'stuff'"),
+        ("\"stuff goes on\"", "'stuff goes on'"),
+        ("\"stuff '\"", "'stuff '''"),
+        ("\"stuff 'goes\\\" on\"", "'stuff ''goes'' on'"),
+        ("(good stuff) || (more 'almost \"decent\"' stuff)",
+            "(good & stuff) | (more & 'almost ''decent''' & stuff)"),
     ])
     def test_parse(self, parser, query, expected):
         output = parser.parse(query)
         assert output == expected
 
-#    @pytest.mark.parametrize("query,illegal", [
-#        ("stuff", None),
-#        ("%stuff;", (["%", ";"], [0, 6]))
-#    ])
-#    def test_illegal(self, lexer, query, illegal):
-#        lexer.input(query)
-#        # consume input s.t. tokens are generated
-#        for _ in lexer:
-#            pass
-#        assert lexer.get_illegal() == illegal
+    @pytest.mark.parametrize("query,expected", [
+        ("stuff", "stuff"),
+        ("%stuff;", "stuff")
+    ])
+    def test_illegal(self, parser, query, expected):
+        output = parser.parse(query)
+        assert output == expected
 
