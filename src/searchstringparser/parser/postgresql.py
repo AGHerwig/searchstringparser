@@ -14,7 +14,7 @@ PostgreSQL Search Token Parser
 :Date:
     2015-09-16
 :Copyright:
-    Copyright |c| 2015, Max-Plank-Institute for Molecular Genetics, all rights reserved.
+    Copyright |c| 2015, Max Plank Institute for Molecular Genetics, all rights reserved.
 :File:
     postgresql.py
 

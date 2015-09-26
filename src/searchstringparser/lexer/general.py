@@ -14,7 +14,7 @@ General Search String Token Lexer
 :Date:
     2015-09-16
 :Copyright:
-    Copyright |c| 2015, Max-Plank-Institute for Molecular Genetics, all rights reserved.
+    Copyright |c| 2015, Max Plank Institute for Molecular Genetics, all rights reserved.
 :File:
     general.py
 

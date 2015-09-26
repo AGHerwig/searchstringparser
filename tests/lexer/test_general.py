@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from __future__ import (absolute_import, unicode_literals)
+from __future__ import (absolute_import,)
 
 
 """
@@ -14,7 +14,7 @@ General Search String Token Lexer Tests
 :Date:
     2015-09-18
 :Copyright:
-    Copyright |c| 2015, Max-Plank-Institute for Molecular Genetics, all rights reserved.
+    Copyright |c| 2015, Max Plank Institute for Molecular Genetics, all rights reserved.
 :File:
     test_general.py
 
