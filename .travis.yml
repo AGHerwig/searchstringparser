@@ -14,8 +14,8 @@ env:
     - TOXENV=3.3-ply3.6-nocover
     - TOXENV=3.4-ply3.6,coveralls
     - TOXENV=3.4-ply3.6-nocover
-    - TOXENV=pypy-ply3.6,coveralls
-    - TOXENV=pypy-ply3.6-nocover
+    - TOXENV=3.5-ply3.6,coveralls
+    - TOXENV=3.5-ply3.6-nocover
 before_install:
   - python --version
   - uname -a
