@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from __future__ import (absolute_import, unicode_literals)
+from __future__ import (absolute_import,)
 
 
 """
@@ -25,8 +25,6 @@ Search String Parser
 __version__ = "0.1.1"
 
 
-from .lexer import *
-from .parser import *
-
-
+from .lexer import *  # NOQA
+from .parser import *  # NOQA
 

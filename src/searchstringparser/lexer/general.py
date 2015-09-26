@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from __future__ import (absolute_import, unicode_literals, print_function)
+from __future__ import (absolute_import, print_function)
 
 
 """
@@ -48,7 +48,7 @@ class GeneralSearchStringLexer(object):
     )
 
     # A string containing ignored characters (spaces and tabs)
-    t_ignore  = " \t\r\n\f\v" # whitespace (interpreted literally not as regex)
+    t_ignore = " \t\r\n\f\v"  # whitespace (interpreted literally not as regex)
     # Regular expression rules for simple tokens
     t_WORD = r"\w+"
     t_WILDCARD = r"\*"
@@ -57,7 +57,7 @@ class GeneralSearchStringLexer(object):
     t_OR = r"\|{1,2}|or|OR"
     # rules for 'quoting' state
     t_quoting_ignore = ""
-    t_quoting_SYMBOL = r"([^'\"\s\\]|\\(?!'|\"))+" # anything but other tokens
+    t_quoting_SYMBOL = r"([^'\"\s\\]|\\(?!'|\"))+"  # anything but other tokens
 
     def __init__(self, illegal="ignore", **kw_args):
         super(GeneralSearchStringLexer, self).__init__()
