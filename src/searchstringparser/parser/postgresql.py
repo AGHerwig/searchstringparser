@@ -81,31 +81,31 @@ class PostgreSQLTextSearchParser(object):
 
     def p_expression_space(self, p):
         """expression : expression expression %prec AND"""
-        p[0] = "{} & {}".format(p[1], p[2])
+        p[0] = "{0} & {1}".format(p[1], p[2])
 
     def p_expression_and(self, p):
         """expression : expression AND expression"""
-        p[0] = "{} & {}".format(p[1], p[3])
+        p[0] = "{0} & {1}".format(p[1], p[3])
 
     def p_expression_or(self, p):
         """expression : expression OR expression"""
-        p[0] = "{} | {}".format(p[1], p[3])
+        p[0] = "{0} | {1}".format(p[1], p[3])
 
     def p_expression_unot(self, p):
         """expression : NOT expression"""
-        p[0] = "!{}".format(p[2])
+        p[0] = "!{0}".format(p[2])
 
     def p_expression_parens(self, p):
         """expression : LPAREN expression RPAREN"""
-        p[0] = "({})".format(p[2])
+        p[0] = "({0})".format(p[2])
 
     def p_expression_quoted(self, p):
         """expression : QUOTE term QUOTE"""
-        p[0] = "'{}'".format(p[2])
+        p[0] = "'{0}'".format(p[2])
 
     def p_expression_word_wildcard(self, p):
         """expression : WORD WILDCARD"""
-        p[0] = "{}:*".format(p[1])
+        p[0] = "{0}:*".format(p[1])
 
     def p_expression_word(self, p):
         """expression : WORD"""
@@ -113,11 +113,11 @@ class PostgreSQLTextSearchParser(object):
 
     def p_term_term_space_term(self, p):
         """term : term SPACE term"""
-        p[0] = "{} {}".format(p[1], p[3])
+        p[0] = "{0} {1}".format(p[1], p[3])
 
     def p_term_term_term(self, p):
         """term : term term %prec WILDCARD"""
-        p[0] = "{}{}".format(p[1], p[2])
+        p[0] = "{0}{1}".format(p[1], p[2])
 
     def p_term_literal_quote(self, p):
         """term : LITERAL_QUOTE"""
