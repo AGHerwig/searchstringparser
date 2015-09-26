@@ -14,8 +14,8 @@ Search String Parser
     * - package
       - |version| |downloads| |wheel| |supported-versions| |supported-implementations|
 
-.. |docs| image:: https://readthedocs.org/projects/searchstringparser/badge/?style=flat
-    :target: https://readthedocs.org/projects/searchstringparser
+.. |docs| image:: https://readthedocs.org/projects/searchstringparser/badge/?version=latest
+    :target: http://searchstringparser.readthedocs.org/en/latest/?badge=latest
     :alt: Documentation Status
 
 .. |travis| image:: https://travis-ci.org/AGHerwig/searchstringparser.svg?branch=master
@@ -28,7 +28,8 @@ Search String Parser
 
 .. |coveralls| image:: https://coveralls.io/repos/AGHerwig/searchstringparser/badge.svg?branch=master&service=github
     :alt: Coverage Status
-    :target: https://coveralls.io/r/AGHerwig/searchstringparser
+    :target: https://coveralls.io/github/AGHerwig/searchstringparser?branch=master
+
 .. |version| image:: https://img.shields.io/pypi/v/searchstringparser.svg?style=flat
     :alt: PyPI Package latest release
     :target: https://pypi.python.org/pypi/searchstringparser
