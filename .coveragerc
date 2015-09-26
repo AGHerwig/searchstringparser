@@ -2,11 +2,15 @@
 source = src
 
 [run]
-branch = True
+branch = true
 source = src
 parallel = true
+omit = src/searchstringparser/__main__.py
+       src/searchstringparser/parser/parsetab.py
 
 [report]
 show_missing = true
 precision = 2
 omit = *migrations*
+       src/searchstringparser/__main__.py
+       src/searchstringparser/parser/parsetab.py
