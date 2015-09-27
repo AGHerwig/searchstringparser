@@ -61,7 +61,7 @@ class GeneralSearchStringLexer(object):
 
     def __init__(self, illegal="ignore", **kw_args):
         super(GeneralSearchStringLexer, self).__init__()
-# pick between different error handling methods
+# TODO: pick between different error handling methods
         self.lexer = lex.lex(module=self, **kw_args)
         self.parens_level = 0
         self._quote_start = None

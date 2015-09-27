@@ -68,11 +68,24 @@ class TestGeneralSearchStringLexer(object):
         output = parser.parse(query)
         assert output == expected
 
-    @pytest.mark.parametrize("query,expected", [
-        ("stuff", "stuff"),
-        ("%stuff;", "stuff")
+    @pytest.mark.parametrize("query,expected,illegal,illegal_pos", [
+        ("stuff", "stuff", None, None),
+        ("%stuff;", "stuff", ("%", ";"), (0, 6))
     ])
-    def test_illegal(self, parser, query, expected):
+    def test_illegal(self, parser, query, expected, illegal, illegal_pos):
         output = parser.parse(query)
         assert output == expected
+        illegal_ = parser.get_illegal()
+        if illegal_ is not None:
+            assert illegal_[0] == illegal
+            assert illegal_[1] == illegal_pos
+
+    @pytest.mark.parametrize("query,message", [
+        ("stuff & & stuff", "LexToken(AND, '&', 1, 8)"),
+        ("'stuff", "Syntax error at EOF!"),
+    ])
+    def test_errors(self, parser, query, message):
+        with pytest.raises(SyntaxError) as err:
+            parser.parse(query)
+            assert err.value.message == message
 
