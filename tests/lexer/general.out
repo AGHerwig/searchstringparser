@@ -48,3 +48,5 @@ LexToken(SPACE,' ',1,6)
 LexToken(SPACE,' ',1,11)
 LexToken(LITERAL_QUOTE,"'",1,7)
 LexToken(QUOTE,'"',1,8)
+Invalid character(s): %, ;
+at position(s): 0, 6

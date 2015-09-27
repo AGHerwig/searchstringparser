@@ -84,7 +84,7 @@ class TestGeneralSearchStringLexer(object):
         for _ in lexer:
             pass
         assert lexer.get_illegal() == illegal
-        
+
     @pytest.mark.parametrize("query,lines", [
         ("stuff", (0,)),
         ("stuff stuff", (0, 6)),
@@ -112,6 +112,8 @@ class TestGeneralSearchStringLexer(object):
         ("\"stuff\"", (40, 42, 41)),
         ("\"stuff goes on\"", (40, 42, 46, 43, 47, 44, 45)),
         ("\"stuff '\"", (40, 42, 46, 48, 49)),
+        ("stuff", (0,)),
+        ("%stuff;", (1, 50, 51))
     ])
     def test_print(self, lexer, capsys, general_output, query, lines):
         lexer.print_tokens(query)
