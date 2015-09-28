@@ -64,6 +64,9 @@ class GeneralSearchStringLexer(object):
 # TODO: pick between different error handling methods
         self.lexer = lex.lex(module=self, **kw_args)
         self.parens_level = 0
+        self.last_lparens = 0
+        self.last_rparens = 0
+        self.last_quote = None
         self._quote_start = None
         self._invalid = None
         self._invalid_pos = None
@@ -75,7 +78,11 @@ class GeneralSearchStringLexer(object):
         return (tok for tok in iter(self.lexer.token, None))
 
     def input(self, data):
+        self.lexer.push_state("INITIAL")
         self.parens_level = 0
+        self.last_lparens = 0
+        self.last_rparens = 0
+        self.last_quote = None
         self._quote_start = None
         self._invalid = list()
         self._invalid_pos = list()
@@ -104,11 +111,13 @@ class GeneralSearchStringLexer(object):
     def t_LPAREN(self, t):
         r"\("
         self.parens_level += 1
+        self.last_lparens = t.lexer.lexpos - 1
         return t
 
     def t_RPAREN(self, t):
         r"\)"
         self.parens_level -= 1
+        self.last_rparens = t.lexer.lexpos - 1
         return t
 
     # quoting state
@@ -119,6 +128,7 @@ class GeneralSearchStringLexer(object):
     def t_QUOTE(self, t):
         r"'|\""
         self._quote_start = t.lexer.lexpos
+        self.last_quote = t.lexer.lexpos - 1
         t.lexer.push_state("quoting")
         return t
 
@@ -128,6 +138,7 @@ class GeneralSearchStringLexer(object):
         if t.value != t.lexer.lexdata[self._quote_start - 1]:
             t.type = "LITERAL_QUOTE"
             return t
+        self.last_quote = None
         t.lexer.pop_state()
         return t
 

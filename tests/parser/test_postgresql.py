@@ -81,11 +81,13 @@ class TestGeneralSearchStringLexer(object):
             assert illegal_[1] == illegal_pos
 
     @pytest.mark.parametrize("query,message", [
-        ("stuff & & stuff", "LexToken(AND, '&', 1, 8)"),
-        ("'stuff", "Syntax error at EOF!"),
+        ("stuff & & stuff", "LexToken(AND,'&',1,8)"),
+        ("'stuff", "Unclosed quote at position 0."),
+        ("(stuff", "1 mismatched parentheses! Last opening parenthesis at position 0."),
+        ("stuff)", "1 mismatched parentheses! Last closing parenthesis at position 5."),
     ])
     def test_errors(self, parser, query, message):
-        with pytest.raises(SyntaxError) as err:
+        with pytest.raises(SyntaxError) as excinfo:
             parser.parse(query)
-            assert err.value.message == message
+        assert str(excinfo.value) == message
 

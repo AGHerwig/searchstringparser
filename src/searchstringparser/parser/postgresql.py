@@ -76,8 +76,26 @@ class PostgreSQLTextSearchParser(object):
 
     def p_error(self, p):
         if p is None:
-            raise SyntaxError("Syntax error at EOF!")
-        raise SyntaxError(str(p))
+            if self.lexer.parens_level > 0:
+                raise SyntaxError("{0:d} mismatched parentheses! Last opening"
+                        " parenthesis at position {1:d}.".format(
+                            self.lexer.parens_level,
+                            self.lexer.last_lparens
+                        ))
+            elif self.lexer.last_quote is not None:
+                raise SyntaxError("Unclosed quote at position {0:d}.".format(
+                    self.lexer.last_quote
+                ))
+            else:
+                raise SyntaxError("Syntax error at EOF!")
+        if self.lexer.parens_level < 0:
+            raise SyntaxError("{0:d} mismatched parentheses! Last closing"
+                    " parenthesis at position {1:d}.".format(
+                        abs(self.lexer.parens_level),
+                        self.lexer.last_rparens
+                    ))
+        else:
+            raise SyntaxError(str(p))
 
     def p_expression_space(self, p):
         """expression : expression expression %prec AND"""
