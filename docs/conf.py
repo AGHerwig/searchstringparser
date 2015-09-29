@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+
 from __future__ import unicode_literals
 
 import os
@@ -41,3 +43,7 @@ html_sidebars = {
    '**': ['searchbox.html', 'globaltoc.html', 'sourcelink.html'],
 }
 html_short_title = '%s-%s' % (project, version)
+
+# napoleon settings
+napoleon_google_docstring = False
+napoleon_numpy_docstring = True

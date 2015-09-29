@@ -1,4 +1,3 @@
-====================
 Search String Parser
 ====================
 
@@ -52,7 +51,12 @@ Search String Parser
 
 Parse a more general search syntax to conform with a particular SQL dialect.
 
+Currently, this is implemented using ply_ with a general lexer and a parser for
+generating PostgreSQL-specific search queries.
+
 * Free software: BSD license
+
+.. _ply: http://www.dabeaz.com/ply/ply.html
 
 Installation
 ============

@@ -29,6 +29,9 @@ import ply.lex as lex
 
 
 class GeneralSearchStringLexer(object):
+    """
+    """
+
     states = (
         ("quoting", "exclusive"),
     )
@@ -60,6 +63,18 @@ class GeneralSearchStringLexer(object):
     t_quoting_SYMBOL = r"([^'\"\s\\]|\\(?!'|\"))+"  # anything but other tokens
 
     def __init__(self, illegal="ignore", **kw_args):
+        """A composite class of a ply.lex.lex.
+
+        This is the setup step necessary before you can iterate over the tokens.
+
+        Parameters
+        ----------
+        illegal : {'record', 'ignore', 'error'} (optional)
+            Action to be taken when illegal characters are encountered. The
+            default is to record them but continue without regarding them.
+        kw_args :
+            Keyword arguments are passed to the ply.lex.lex call.
+        """
         super(GeneralSearchStringLexer, self).__init__()
 # TODO: pick between different error handling methods
         self.lexer = lex.lex(module=self, **kw_args)
@@ -78,6 +93,15 @@ class GeneralSearchStringLexer(object):
         return (tok for tok in iter(self.lexer.token, None))
 
     def input(self, data):
+        """Add a new string to the lexer.
+
+        This is the setup step necessary before you can iterate over the tokens.
+
+        Parameters
+        ----------
+        data : str
+            Any string.
+        """
         self.lexer.push_state("INITIAL")
         self.parens_level = 0
         self.last_lparens = 0
@@ -89,12 +113,32 @@ class GeneralSearchStringLexer(object):
         self.lexer.input(data)
 
     def get_illegal(self):
+        """Return encountered illegal characters.
+
+        Returns
+        -------
+        None
+            If no illegal characters occurred.
+        Tuple
+            A pair of lists that contain the illegal characters and
+            the positions where they occurred.
+        """
         if not self._invalid:
             return None
         return (self._invalid, self._invalid_pos)
 
     # inspect output
     def print_tokens(self, data):
+        """Print all tokens in a string.
+
+        First iterates through all tokens found and prints them to sys.stdout.
+        Then prints illegal characters if any occurred.
+
+        Parameters
+        ----------
+        data : str
+            Any string.
+        """
         self.input(data)
         for tok in self:
             print(tok)
