@@ -124,8 +124,8 @@ class PostgreSQLTextSearchParser(object):
                 raise SyntaxError("Unclosed quote at position {0:d}.".format(
                     self.lexer.last_quote
                 ))
-            else:
-                raise SyntaxError("Syntax error at EOF!")
+#            else:  # there should be no other EOF syntax errors
+#                raise SyntaxError("Syntax error at EOF!")
         if self.lexer.parens_level < 0:
             raise SyntaxError("{0:d} mismatched parentheses! Last closing"
                     " parenthesis at position {1:d}.".format(
