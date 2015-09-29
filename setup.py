@@ -21,7 +21,7 @@ def read(*names, **kwargs):
 
 setup(
     name='searchstringparser',
-    version='0.2.2',
+    version='0.2.3',
     license='BSD',
     description='Parse a more general search syntax to conform with a particular SQL dialect.',
     long_description='%s\n%s' % (read('README.rst'), re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
