@@ -55,9 +55,9 @@ class GeneralSearchStringLexer(object):
     # Regular expression rules for simple tokens
     t_WORD = r"\w+"
     t_WILDCARD = r"\*"
-    t_NOT = r"-|~|!|not|NOT"
-    t_AND = r"&{1,2}|and|AND"
-    t_OR = r"\|{1,2}|or|OR"
+    t_NOT = r"-|~|!|not\b|NOT\b"
+    t_AND = r"&{1,2}|and\b|AND\b"
+    t_OR = r"\|{1,2}|or\b|OR\b"
     # rules for 'quoting' state
     t_quoting_ignore = ""
     t_quoting_SYMBOL = r"([^'\"\s\\]|\\(?!'|\"))+"  # anything but other tokens

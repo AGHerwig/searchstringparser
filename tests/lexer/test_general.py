@@ -28,13 +28,16 @@ import pytest
 
 from searchstringparser import GeneralSearchStringLexer
 
+
 @pytest.fixture
 def lexer():
     return GeneralSearchStringLexer()
 
+
 @pytest.fixture
 def general_output():
     return io.open("tests/lexer/general.out").readlines()
+
 
 class TestGeneralSearchStringLexer(object):
     @pytest.mark.parametrize("query,expected", [
@@ -68,6 +71,15 @@ class TestGeneralSearchStringLexer(object):
         ("\"stuff '\"", ("QUOTE", "SYMBOL", "SPACE", "LITERAL_QUOTE", "QUOTE")),
         ("\"stuff 'goes\\\" on\"", ("QUOTE", "SYMBOL", "SPACE", "LITERAL_QUOTE",
             "SYMBOL", "LITERAL_QUOTE", "SPACE", "SYMBOL", "QUOTE")),
+        ("order foo", ("WORD", "WORD")),
+        ("foo or order", ("WORD", "OR", "WORD")),
+        ("foo OR order", ("WORD", "OR", "WORD")),
+        ("foo | order", ("WORD", "OR", "WORD")),
+        ("foo || order", ("WORD", "OR", "WORD")),
+        ("foo & andrew", ("WORD", "AND", "WORD")),
+        ("foo && andrew", ("WORD", "AND", "WORD")),
+        ("foo and andrew", ("WORD", "AND", "WORD")),
+        ("foo AND andrew", ("WORD", "AND", "WORD")),
     ])
     def test_token(self, lexer, query, expected):
         lexer.input(query)
