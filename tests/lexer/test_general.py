@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-from __future__ import (absolute_import,)
-
-
 """
 =======================================
 General Search String Token Lexer Tests
@@ -14,13 +11,16 @@ General Search String Token Lexer Tests
 :Date:
     2015-09-18
 :Copyright:
-    Copyright |c| 2015, Max Plank Institute for Molecular Genetics, all rights reserved.
+    Copyright |c| 2015, Max Plank Institute for Molecular Genetics,
+    all rights reserved.
 :File:
     test_general.py
 
 .. |c| unicode: U+A9
 """
 
+
+from __future__ import absolute_import
 
 import io
 
@@ -62,15 +62,23 @@ class TestGeneralSearchStringLexer(object):
         ("stuff or stuff", ("WORD", "OR", "WORD")),
         ("stuff OR stuff", ("WORD", "OR", "WORD")),
         ("(stuff OR stuff)", ("LPAREN", "WORD", "OR", "WORD", "RPAREN")),
-        ("(good stuff) (more stuff)", ("LPAREN", "WORD", "WORD", "RPAREN",
-            "LPAREN", "WORD", "WORD", "RPAREN")),
+        (
+            "(good stuff) (more stuff)",
+            ("LPAREN", "WORD", "WORD", "RPAREN", "LPAREN", "WORD", "WORD",
+             "RPAREN")
+        ),
         ("'stuff'", ("QUOTE", "SYMBOL", "QUOTE")),
         ("\"stuff\"", ("QUOTE", "SYMBOL", "QUOTE")),
-        ("\"stuff goes on\"", ("QUOTE", "SYMBOL", "SPACE", "SYMBOL", "SPACE",
-            "SYMBOL", "QUOTE")),
+        (
+            "\"stuff goes on\"",
+            ("QUOTE", "SYMBOL", "SPACE", "SYMBOL", "SPACE", "SYMBOL", "QUOTE")
+        ),
         ("\"stuff '\"", ("QUOTE", "SYMBOL", "SPACE", "LITERAL_QUOTE", "QUOTE")),
-        ("\"stuff 'goes\\\" on\"", ("QUOTE", "SYMBOL", "SPACE", "LITERAL_QUOTE",
-            "SYMBOL", "LITERAL_QUOTE", "SPACE", "SYMBOL", "QUOTE")),
+        (
+            "\"stuff 'goes\\\" on\"",
+            ("QUOTE", "SYMBOL", "SPACE", "LITERAL_QUOTE", "SYMBOL",
+             "LITERAL_QUOTE", "SPACE", "SYMBOL", "QUOTE")
+        ),
         ("order foo", ("WORD", "WORD")),
         ("foo or order", ("WORD", "OR", "WORD")),
         ("foo OR order", ("WORD", "OR", "WORD")),
@@ -134,4 +142,3 @@ class TestGeneralSearchStringLexer(object):
         print(query)
         assert out == expected
         assert err == ""
-

@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-from __future__ import (absolute_import,)
-
-
 """
 ====================================
 PostgreSQL Search Token Parser Tests
@@ -14,13 +11,16 @@ PostgreSQL Search Token Parser Tests
 :Date:
     2015-09-18
 :Copyright:
-    Copyright |c| 2015, Max Plank Institute for Molecular Genetics, all rights reserved.
+    Copyright |c| 2015, Max Plank Institute for Molecular Genetics,
+    all rights reserved.
 :File:
     test_postgresql.py
 
 .. |c| unicode: U+A9
 """
 
+
+from __future__ import absolute_import
 
 import pytest
 
@@ -30,6 +30,7 @@ from searchstringparser import PostgreSQLTextSearchParser
 @pytest.fixture
 def parser():
     return PostgreSQLTextSearchParser()
+
 
 class TestGeneralSearchStringLexer(object):
     @pytest.mark.parametrize("query,expected", [
@@ -83,11 +84,16 @@ class TestGeneralSearchStringLexer(object):
     @pytest.mark.parametrize("query,message", [
         ("stuff & & stuff", "LexToken(AND,'&',1,8)"),
         ("'stuff", "Unclosed quote at position 0."),
-        ("(stuff", "1 mismatched parentheses! Last opening parenthesis at position 0."),
-        ("stuff)", "1 mismatched parentheses! Last closing parenthesis at position 5."),
+        (
+            "(stuff",
+            "1 mismatched parentheses! Last opening parenthesis at position 0."
+        ),
+        (
+            "stuff)",
+            "1 mismatched parentheses! Last closing parenthesis at position 5."
+        ),
     ])
     def test_errors(self, parser, query, message):
         with pytest.raises(SyntaxError) as excinfo:
             parser.parse(query)
         assert str(excinfo.value) == message
-

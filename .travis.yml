@@ -3,7 +3,7 @@ python:
   - "2.7"
   - "3.5"
   - "3.6"
-  - "3.7"
+  - "3.7-dev"
 sudo: false
 git:
   depth: 2
@@ -21,16 +21,14 @@ matrix:
   fast_finish: true
 before_install:
   - python --version
-  - uname -a
-  - lsb_release -a
 install:
   - pip install --upgrade pip setuptools wheel tox tox-travis
   - pip --version
   - tox --version
 script:
 - tox -- --cov-report xml --cov-report term
-- bash <(curl -s https://codecov.io/bash)
 after_success:
+- bash <(curl -s https://codecov.io/bash)
 after_failure:
   - more .tox/log/* | cat
   - more .tox/*/log/* | cat

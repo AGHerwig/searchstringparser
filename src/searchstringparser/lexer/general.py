@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-from __future__ import (absolute_import, print_function)
-
-
 """
 =================================
 General Search String Token Lexer
@@ -14,7 +11,8 @@ General Search String Token Lexer
 :Date:
     2015-09-16
 :Copyright:
-    Copyright |c| 2015, Max Plank Institute for Molecular Genetics, all rights reserved.
+    Copyright |c| 2015, Max Plank Institute for Molecular Genetics,
+    all rights reserved.
 :File:
     general.py
 
@@ -22,10 +20,12 @@ General Search String Token Lexer
 """
 
 
-__all__ = ["GeneralSearchStringLexer"]
-
+from __future__ import absolute_import, print_function
 
 import ply.lex as lex
+
+
+__all__ = ["GeneralSearchStringLexer"]
 
 
 class GeneralSearchStringLexer(object):
@@ -125,7 +125,7 @@ class GeneralSearchStringLexer(object):
         """
         if not self._invalid:
             return None
-        return (self._invalid, self._invalid_pos)
+        return self._invalid, self._invalid_pos
 
     # inspect output
     def print_tokens(self, data):
@@ -143,8 +143,9 @@ class GeneralSearchStringLexer(object):
         for tok in self:
             print(tok)
         if self._invalid:
-            print("Invalid character(s): " + ", ".join(self._invalid))
-            print("at position(s): " + ", ".join([str(x) for x in self._invalid_pos]))
+            print("Invalid character(s):", ", ".join(self._invalid))
+            print("at position(s): ",
+                  ", ".join([str(x) for x in self._invalid_pos]))
 
     # Error handling rule
     def t_ANY_error(self, t):
@@ -189,4 +190,3 @@ class GeneralSearchStringLexer(object):
     def t_quoting_SPACE(self, t):
         r"\s+"
         return t
-
