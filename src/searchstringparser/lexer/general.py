@@ -144,7 +144,7 @@ class GeneralSearchStringLexer(object):
             print(tok)
         if self._invalid:
             print("Invalid character(s):", ", ".join(self._invalid))
-            print("at position(s): ",
+            print("at position(s):",
                   ", ".join([str(x) for x in self._invalid_pos]))
 
     # Error handling rule
