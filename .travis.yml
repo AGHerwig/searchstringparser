@@ -1,31 +1,36 @@
 language: python
-python: 2.7
+python:
+  - "2.7"
+  - "3.5"
+  - "3.6"
+  - "3.7"
 sudo: false
+git:
+  depth: 2
+cache:
+  pip: true
+branches:
+  only:
+  - master
+  - devel
+  - "/^\\d+\\.\\d+\\.\\d+[a]?\\d*$/"
 env:
   global:
-    LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
-  matrix:
-    - TOXENV=check
-    - TOXENV=2.6-ply3.6,coveralls
-    - TOXENV=2.6-ply3.6-nocover
-    - TOXENV=2.7-ply3.6,coveralls
-    - TOXENV=2.7-ply3.6-nocover
-    - TOXENV=3.3-ply3.6,coveralls
-    - TOXENV=3.3-ply3.6-nocover
-    - TOXENV=3.4-ply3.6,coveralls
-    - TOXENV=3.4-ply3.6-nocover
+  - LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
+matrix:
+  fast_finish: true
 before_install:
   - python --version
   - uname -a
   - lsb_release -a
 install:
-  - pip install tox
-  - virtualenv --version
-  - easy_install --version
+  - pip install --upgrade pip setuptools wheel tox tox-travis
   - pip --version
   - tox --version
 script:
-  - tox -v
+- tox -- --cov-report xml --cov-report term
+- bash <(curl -s https://codecov.io/bash)
+after_success:
 after_failure:
   - more .tox/log/* | cat
   - more .tox/*/log/* | cat

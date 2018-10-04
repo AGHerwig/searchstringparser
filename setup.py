@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 
 
-from __future__ import (absolute_import, print_function)
+from __future__ import absolute_import
 
 import io
 import os.path as osp
@@ -43,11 +43,11 @@ setup(
         'Operating System :: POSIX',
         'Operating System :: Unix',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Database :: Front-Ends',
     ],

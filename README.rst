@@ -7,11 +7,9 @@ Search String Parser
     * - docs
       - |docs|
     * - tests
-      - | |travis| |appveyor|
-        | |coveralls|
-        |
+      - | |travis|
     * - package
-      - |version| |downloads| |wheel| |supported-versions| |supported-implementations|
+      - |version| |wheel| |supported-versions| |supported-implementations|
 
 .. |docs| image:: https://readthedocs.org/projects/searchstringparser/badge/?version=latest
     :target: http://searchstringparser.readthedocs.org/en/latest/?badge=latest
@@ -21,20 +19,8 @@ Search String Parser
     :alt: Travis-CI Build Status
     :target: https://travis-ci.org/AGHerwig/searchstringparser
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/github/AGHerwig/searchstringparser?branch=master&svg=true
-    :alt: AppVeyor Build Status
-    :target: https://ci.appveyor.com/project/AGHerwig/searchstringparser
-
-.. |coveralls| image:: https://coveralls.io/repos/AGHerwig/searchstringparser/badge.svg?branch=master&service=github
-    :alt: Coverage Status
-    :target: https://coveralls.io/github/AGHerwig/searchstringparser?branch=master
-
 .. |version| image:: https://img.shields.io/pypi/v/searchstringparser.svg?style=flat
     :alt: PyPI Package latest release
-    :target: https://pypi.python.org/pypi/searchstringparser
-
-.. |downloads| image:: https://img.shields.io/pypi/dm/searchstringparser.svg?style=flat
-    :alt: PyPI Package monthly downloads
     :target: https://pypi.python.org/pypi/searchstringparser
 
 .. |wheel| image:: https://img.shields.io/pypi/wheel/searchstringparser.svg?style=flat
