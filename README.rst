@@ -21,19 +21,19 @@ Search String Parser
 
 .. |version| image:: https://img.shields.io/pypi/v/searchstringparser.svg?style=flat
     :alt: PyPI Package latest release
-    :target: https://pypi.python.org/pypi/searchstringparser
+    :target: https://pypi.org/project/searchstringparser
 
 .. |wheel| image:: https://img.shields.io/pypi/wheel/searchstringparser.svg?style=flat
     :alt: PyPI Wheel
-    :target: https://pypi.python.org/pypi/searchstringparser
+    :target: https://pypi.org/project/searchstringparser
 
 .. |supported-versions| image:: https://img.shields.io/pypi/pyversions/searchstringparser.svg?style=flat
     :alt: Supported versions
-    :target: https://pypi.python.org/pypi/searchstringparser
+    :target: https://pypi.org/project/searchstringparser
 
 .. |supported-implementations| image:: https://img.shields.io/pypi/implementation/searchstringparser.svg?style=flat
     :alt: Supported implementations
-    :target: https://pypi.python.org/pypi/searchstringparser
+    :target: https://pypi.org/project/searchstringparser
 
 Parse a more general search syntax to conform with a particular SQL dialect.
 

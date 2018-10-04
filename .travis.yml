@@ -13,7 +13,7 @@ branches:
   only:
   - master
   - devel
-  - "/^\\d+\\.\\d+\\.\\d+[a]?\\d*$/"
+  - "/^v\\d+\\.\\d+\\.\\d+[a]?\\d*$/"
 env:
   global:
   - LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
